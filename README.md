@@ -1,6 +1,6 @@
-# otel-prometheus-grafana-demo
+# hasura-otel-logs-metrics-exporter
 
-A repository which contains demo for Otel exporter, prometheus reciever and Grafana service.
+This repository contains a demo where it shows how logs are exported from OpenTelemetry exporter in Hasura to OTEL collector and then build visualizations on top of that in Grafana via Loki
 
 ### Pre-requisites
 
@@ -39,3 +39,9 @@ After login, you'll find dashboards related to hasura. Some are showing logs and
 ### The flow of logs and metrics
 
 The logs and metrics are exported by OTEL exporter in hasura, they'll be collected by OTEL collector. After OTEL collector processes, it'll export to desired targets. For logs, it would be Loki and for metrics, it would be prometheus.
+
+### Useful links
+
+- [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/)
+- [Loki (2.8.x)](https://grafana.com/docs/loki/v2.8.x/)
+- [Prometheus](https://prometheus.io/)
