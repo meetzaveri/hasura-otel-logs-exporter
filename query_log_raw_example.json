@@ -1,0 +1,19 @@
+{
+  "detail": {
+    "generated_sql": {
+      "Album": {
+        "prepared_arguments": null,
+        "query": "SELECT  coalesce(json_agg(\"root\" ), '[]' ) AS \"root\" FROM  (SELECT  row_to_json((SELECT  \"_e\"  FROM  (SELECT  \"_root.base\".\"AlbumId\" AS \"AlbumId\", \"_root.base\".\"ArtistId\" AS \"ArtistId\", \"_root.base\".\"Title\" AS \"Title\"       ) AS \"_e\"      ) ) AS \"root\" FROM  (SELECT  *  FROM \"public\".\"Album\"  WHERE ('true')     ) AS \"_root.base\"      ) AS \"_root\"       /* field_name=Album, parameterized_query_hash=4506e5f48126b9019e63d6c9b92cdadc1ce48118, operation_name=getAlbums */"
+      }
+    },
+    "kind": "database",
+    "query": {
+      "operationName": "getAlbums",
+      "query": "query getAlbums {\n  Album {\n    AlbumId\n    ArtistId\n    Title\n  }\n}\n"
+    },
+    "request_id": "c6838be3-172e-4337-b2f4-a1c021be4d78"
+  },
+  "level": "info",
+  "timestamp": "2024-04-08T06:40:59.064+0000",
+  "type": "query-log"
+}

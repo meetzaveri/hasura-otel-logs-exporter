@@ -1,0 +1,170 @@
+receivers:
+  # Data sources: logs
+  # fluentforward:
+  #   endpoint: 0.0.0.0:8006
+
+  # Data sources: metrics
+  # hostmetrics:
+  #   scrapers:
+  #     cpu:
+  #     disk:
+  #     filesystem:
+  #     load:
+  #     memory:
+  #     network:
+  #     process:
+  #     processes:
+  #     paging:
+
+  # Data sources: traces
+  # jaeger:
+  #   protocols:
+  #     grpc:
+  #     thrift_binary:
+  #     thrift_compact:
+  #     thrift_http:
+
+  # Data sources: traces, metrics, logs
+  # kafka:
+  #   protocol_version: 2.0.0
+
+  # Data sources: traces, metrics
+  # opencensus:
+
+  # Data sources: traces, metrics, logs
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+  # Data sources: metrics
+  # prometheus:
+  #   config:
+  #     scrape_configs:
+  #       - job_name: otel-collector
+  #         scrape_interval: 5s
+  #         static_configs:
+  #           - targets: [localhost:8888]
+
+  # Data sources: traces
+  zipkin:
+
+exporters:
+  # Data sources: traces, metrics, logs
+  # file:
+  #   path: ./filename.json
+
+  # Data sources: traces
+  # otlp/jaeger:
+  #   endpoint: jaeger-server:4317
+  #   tls:
+  #     cert_file: cert.pem
+  #     key_file: cert-key.pem
+
+  # Data sources: traces, metrics, logs
+  # kafka:
+  #   protocol_version: 2.0.0
+
+  # Data sources: traces, metrics, logs
+  # NOTE: Prior to v0.86.0 use `logging` instead of `debug`
+  # debug:
+  #   verbosity: detailed
+
+  # Data sources: traces, metrics
+  # opencensus:
+  #   endpoint: otelcol2:55678
+
+  # Data sources: traces, metrics, logs
+  # otlp:
+  #   endpoint: otelcol2:4317
+  #   tls:
+  #     cert_file: cert.pem
+  #     key_file: cert-key.pem
+
+  # Data sources: traces, metrics
+  # otlphttp:
+  #   endpoint: https://otlp.example.com:4318
+
+  # Data sources: metrics
+  prometheus:
+    endpoint: :8889
+    namespace: default
+
+  # Data sources: metrics
+  # prometheusremotewrite:
+  #   # endpoint: http://prometheus.example.com:9411/api/prom/push
+  #   # When using the official Prometheus (running via Docker)
+  #   endpoint: "http://host.docker.internal:9090/api/v1/write"
+  #   tls:
+  #     insecure: true
+
+  # Data sources: traces
+  # zipkin:
+  #   endpoint: http://zipkin.example.com:9411/api/v2/spans
+
+processors:
+  # Data sources: traces
+  attributes:
+    actions:
+      - key: environment
+        value: production
+        action: insert
+      - key: db.statement
+        action: delete
+      - key: email
+        action: hash
+
+  # Data sources: traces, metrics, logs
+  batch:
+
+  # Data sources: metrics
+  # filter:
+  #   metrics:
+  #     include:
+  #       match_type: regexp
+  #       metric_names:
+  #         - prefix/.*
+  #         - prefix_.*
+
+  # Data sources: traces, metrics, logs
+  memory_limiter:
+    check_interval: 5s
+    limit_mib: 4000
+    spike_limit_mib: 500
+
+  # Data sources: traces
+  resource:
+    attributes:
+      - key: cloud.zone
+        value: zone-1
+        action: upsert
+      - key: k8s.cluster.name
+        from_attribute: k8s-cluster
+        action: insert
+      - key: redundant-attribute
+        action: delete
+
+  # Data sources: traces
+  probabilistic_sampler:
+    hash_seed: 22
+    sampling_percentage: 15
+
+  # Data sources: traces
+  span:
+    name:
+      to_attributes:
+        rules:
+          - ^\/api\/v1\/document\/(?P<documentId>.*)\/update$
+      from_attributes: [db.svc, operation]
+      separator: "::"
+
+service:
+  pipelines:
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [prometheus]
+    # traces:
+    #   receivers: [jaeger]
+    #   processors: [batch, memory_limiter]
+    #   exporters: [zipkin]

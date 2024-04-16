@@ -1,0 +1,55 @@
+{
+  "body": {
+    "http_info": {
+      "content_encoding": "gzip",
+      "http_version": "HTTP/1.1",
+      "ip": "192.168.65.1",
+      "method": "POST",
+      "request_headers": {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate, br, zstd",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Connection": "keep-alive",
+        "Content-Length": "129",
+        "Host": "localhost:8080",
+        "Origin": "http://localhost:8080",
+        "Referer": "http://localhost:8080/console/api/api-explorer",
+        "Sec-Fetch-Dest": "empty",
+        "Sec-Fetch-Mode": "cors",
+        "Sec-Fetch-Site": "same-origin",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
+        "content-type": "application/json",
+        "sec-ch-ua": "\"Google Chrome\";v=\"123\", \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"123\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"macOS\"",
+        "x-hasura-user-id": "auth0|6580925917683158f9727ca3"
+      },
+      "status": 200,
+      "url": "/v1/graphql"
+    },
+    "operation": {
+      "parameterized_query_hash": "4506e5f48126b9019e63d6c9b92cdadc1ce48118",
+      "query": {
+        "operationName": "MyQuery",
+        "query": "query MyQuery {\n  Album {\n    AlbumId\n    ArtistId\n    Title\n  }\n}\n"
+      },
+      "query_execution_time": 0.014793875,
+      "request_id": "d0efe232-76ff-4195-8ee6-342eecf343b4",
+      "request_mode": "single",
+      "request_read_time": 0.000034042,
+      "request_size": 129,
+      "response_size": 6170,
+      "uncompressed_response_size": 22588,
+      "user_vars": {
+        "x-hasura-role": "admin",
+        "x-hasura-user-id": "auth0|6580925917683158f9727ca3"
+      }
+    },
+    "request_id": "d0efe232-76ff-4195-8ee6-342eecf343b4"
+  },
+  "traceid": "a36d1bfb5a4ed8fd83b490ac082df837",
+  "spanid": "a5ac0622da48978a",
+  "severity": "info",
+  "attributes": { "type": "http-log" },
+  "instrumentation_scope": { "name": "hasura", "version": "v2.37.0" }
+}

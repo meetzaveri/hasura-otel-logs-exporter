@@ -1,0 +1,22 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+exporters:
+  # Data sources: metrics
+  prometheus:
+    endpoint: :8889
+    namespace: default
+
+processors:
+  # Data sources: traces, metrics, logs
+  batch:
+
+service:
+  pipelines:
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [prometheus]

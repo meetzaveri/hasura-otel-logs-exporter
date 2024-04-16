@@ -1,0 +1,29 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+exporters:
+  # Data sources: logs
+  loki:
+    endpoint: http://loki:3100/loki/api/v1/push
+
+  # Data sources: metrics
+  prometheus:
+    endpoint: :8889
+
+processors:
+  # Data sources: traces, metrics, logs
+  batch:
+
+service:
+  pipelines:
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [prometheus]
+    logs:
+      receivers: [otlp]
+      processors: []
+      exporters: [loki]
